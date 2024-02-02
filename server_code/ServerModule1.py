@@ -3,15 +3,40 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
 
-
+import anvil.media
 import PyPDF2
+
+
 @anvil.server.callable
 def merge_PDF_Files():
-  entire_table = app_tables.files.search()
-  for file in entire_table:
-    print(str(file.get_id()))
+
+  # Create a PDF merger object
+  pdf_merger = PyPDF2.PdfFileMerger()
+
+  pdf_files = []
+  # Loop over files in table
+  for row in app_tables.files.search():
+    print('merging files:')
+    file_name = row["file"].name
+    print(file_name)
     
-    #app_tables.files.add_row(file=fl)
+    pdf_files.append(file_name)
+    print(str(pdf_files))
+
+    #merged_file = app_tables.files.get(file_name=file_name)
+
+    # List of PDF files to be merged
+    #pdf_files = ["file1.pdf", "file2.pdf", "file3.pdf"]
+
+  for pdf_file in pdf_files:
+    pdf_merger.append(pdf_file)
+    #pdf_merger.append(merged_file['file_name'])
+
+  
+  app_tables.files.add_row( file=merged_file['file'], file_name=merged_file['file_name'])
+  
+  # Close the merger object
+  pdf_merger.close()
 
 
 

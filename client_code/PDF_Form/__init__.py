@@ -13,7 +13,8 @@ class PDF_Form(PDF_FormTemplate):
 
   def file_loader_1_change(self, file, **event_args):
     for fl in self.file_loader_1.files:
-      app_tables.files.add_row(file=fl)
+      file_name = fl.name
+      app_tables.files.add_row(file=fl, file_name=file_name)
     open_form('PDF_Form')
 
   def button_1_click(self, **event_args):
