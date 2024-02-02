@@ -1,10 +1,14 @@
+import anvil.files
+from anvil.files import data_files
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from anvil.files import data_files
 import anvil.server
 
 import anvil.media
 import PyPDF2
+import io
 
 
 @anvil.server.callable
@@ -17,33 +21,42 @@ def merge_PDF_Files():
   # Loop over files in table
   for row in app_tables.files.search():
     print('merging files:')
-    file = row["file"]
     file_name  = row["file_name"]
     print(file_name)
-    
     pdf_files.append(file_name)
 
+    file = row["file"]
+    # see https://anvil.works/forum/t/creating-and-manipulating-pdf-files-via-pypdf2-and-fpdf/901
+    file_bytes = file.get_bytes()
+    file_for_pdf_reader = io.BytesIO(file_bytes)
+    pdfReader = PyPDF2.PdfFileReader(file_for_pdf_reader)
 
-    #pdf_file_to_merge = app_tables.files.get(file_name=file_name)
-    pdfFileObj = open(file, 'rb')
-    pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
-    # List of PDF files to be merged
-    #pdf_files = ["file1.pdf", "file2.pdf", "file3.pdf"]
-
-
-
+    pypdf2_merger.append(file_for_pdf_reader)
 
   
-  for pdf_file in pdf_files:
-    #pdf_merger.append(pdf_file)
-    #pdf_merger.append(merged_file['file_name'])
-    pass
+  # Output file where the merged PDF will be saved
+  output_pdf = "merged.pdf"
 
+  # Write the merged PDF to the output file
+  with data_files.editing('merged.pdf') as path:
+    with open(output_pdf, "wb") as output_file:
+      pypdf2_merger.write(path)
+    #with open(path, "wb") as f:
+    #  f.write(output_file)
   
-  #app_tables.files.add_row( file=merged_file['file'], file_name=merged_file['file_name'])
+    # path is now a string path on the filesystem. We can write to it with normal Python tools.
+    # For example:
+    
+      
+  #media_obj = anvil.media.from_file(output_file)
+  #media_obj = anvil.media.open(output_file)
+  #output_file_bytes = io.BytesIO(output_file.get_bytes())
+  #media_obj = anvil.media.open(output_file_bytes)
+  
+  #app_tables.files.add_row( file = media_obj, file_name = 'merged.pdf')
   
   # Close the merger object
-  pdf_merger.close()
+  pypdf2_merger.close()
 
 
 
