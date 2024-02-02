@@ -10,6 +10,8 @@ def merge_PDF_Files():
   entire_table = app_tables.files.search()
   for file in entire_table:
     print(str(file.get_id()))
+    
+    #app_tables.files.add_row(file=fl)
 
 
 
