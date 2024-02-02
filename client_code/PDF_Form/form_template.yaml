@@ -9,8 +9,8 @@ components:
   layout_properties: {slot: default}
   components:
   - name: label_1
-    properties: {text: PDF-Dateien zusammenführen, align: center, font: '', font_size: 23,
-      spacing_below: large}
+    properties: {text: PDF-Dateien zusammenführen, align: center, font: '', font_size: 30,
+      spacing_below: large, bold: true}
     type: Label
     layout_properties: {grid_position: 'YLMSMU,QSLDSR'}
   - type: FileLoader
@@ -42,13 +42,14 @@ components:
     layout_properties: {grid_position: 'XDPGBM,BDSLRZ'}
     event_bindings: {change: file_loader_1_change}
   - type: RepeatingPanel
-    properties: {item_template: Form1.ItemTemplate1}
+    properties: {item_template: PDF_Form.ItemTemplate1}
     name: repeating_panel_1
     layout_properties: {grid_position: 'VOAFBP,RJLMTI'}
   - name: button_1
     properties: {text: PDF-Dateien zusammenführen, role: elevated-button, spacing_above: large}
     type: Button
     layout_properties: {grid_position: 'GGZUOF,SSQBZO'}
+    event_bindings: {click: button_1_click}
 - type: FlowPanel
   properties: {}
   name: navbar_links

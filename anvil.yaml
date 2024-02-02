@@ -4,19 +4,22 @@ services:
 - source: /runtime/services/tables.yml
   client_config: {}
   server_config: {}
-startup: null
+startup: {type: form, module: PDF_Form}
 package_name: Multiple_Image_Upload_with_Selective_Delete__forum_example_
 allow_embedding: false
 name: Clone of Multiple Image Upload with Selective Delete (forum example) (2)
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
-startup_form: Form1
+startup_form: null
 db_schema:
-  images:
-    title: images
+  files:
+    title: Files
     client: full
     server: full
     columns:
-    - name: image
-      admin_ui: {width: 200}
+    - name: file
+      admin_ui: {order: 0, width: 200}
       type: media
+    - name: sequence
+      admin_ui: {width: 200, order: 1}
+      type: number
 renamed: true

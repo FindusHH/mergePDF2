@@ -6,8 +6,10 @@ import anvil.server
 
 import PyPDF2
 @anvil.server.callable
-def merge_PDF_Files:
-  entire_table = app_tables.images.search()
+def merge_PDF_Files():
+  entire_table = app_tables.files.search()
+  for file in entire_table:
+    print(str(file.get_id()))
 
 
 
