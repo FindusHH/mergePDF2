@@ -10,8 +10,9 @@ services:
 startup: {type: form, module: PDF_Form}
 package_name: Multiple_Image_Upload_with_Selective_Delete__forum_example_
 allow_embedding: false
-name: Clone of Multiple Image Upload with Selective Delete (forum example) (2)
+name: merge PDF
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
+metadata: {title: merge PDF}
 startup_form: null
 db_schema:
   files:

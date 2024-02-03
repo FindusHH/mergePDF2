@@ -50,6 +50,16 @@ components:
     type: Button
     layout_properties: {grid_position: 'GGZUOF,SSQBZO'}
     event_bindings: {click: button_1_click}
+  - name: create_link
+    properties: {text: Link erstellen, role: elevated-button}
+    type: Button
+    layout_properties: {grid_position: 'OCCUNJ,MDVOKN'}
+    event_bindings: {click: create_link_click}
+  - name: link_merged
+    properties: {text: Zusammengeführte PDFs hier herunterladen, align: center, bold: true}
+    type: Link
+    layout_properties: {grid_position: 'DYXHDM,DUFYHQ'}
+    event_bindings: {click: link_merged_click}
 - type: FlowPanel
   properties: {}
   name: navbar_links

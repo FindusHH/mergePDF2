@@ -11,7 +11,7 @@ components:
   data_bindings:
   - {property: source, code: 'self.item[''icon'']', writeback: false}
 - name: label_1
-  properties: {align: center}
+  properties: {align: center, bold: true, font_size: 16}
   type: Label
   layout_properties: {grid_position: 'ADSZMU,AHMTNW'}
 - name: label_2
