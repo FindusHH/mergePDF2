@@ -8,29 +8,19 @@ from anvil.tables import app_tables
 class PDF_Form(PDF_FormTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
-    #self.repeating_panel_1.items=app_tables.files.search()
+    # find files which do not have a filename
     self.repeating_panel_1.items=app_tables.files.search(file_name = q.not_(None)) # __merged__.pdf
-
+    
+    # sort by sequence number ascending
     sorted_items = sorted(self.repeating_panel_1.items, key=lambda k: k['sequence'], reverse=False)
     self.repeating_panel_1.items = sorted_items
 
 
-  def file_loader_1_change(self, file, **event_args):
-    """
-    list_of_sequence_values =[]
-    maximum = 1
-    # select max sequence value where filename is not none
-    for row in app_tables.files.search(file_name = q.not_(None)):
-      sequence = row["sequence"]
-      list_of_sequence_values.append(sequence)
-      print("sequence (UI) = " + str(sequence))
-      
-    maximum = max(list_of_sequence_values)
-    print("Max Seq Val = " + str(maximum))
-    """
+  def file_loader_1_change(self, file, **event_args):    
+    # Property MUST BE SET IN UI !!
+    #self.file_loader_1.file_types = ".pdf"
+    # only allow .PDF-Files
     
-    
-    self.file_loader_1.file_types = "application/pdf"
     for fl in self.file_loader_1.files:
       file_name = fl.name
       maximum, list_of_sequences = anvil.server.call('get_list_of_sequences_and_max_seqno')
@@ -41,6 +31,7 @@ class PDF_Form(PDF_FormTemplate):
         # assign the highest sequence no
         sequence = maximum + 1
       print("sequence(UI) = " + str(sequence))
+      
       # add row to table
       app_tables.files.add_row(file=fl, file_name=file_name, sequence=sequence)
       
