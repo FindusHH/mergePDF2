@@ -16,7 +16,7 @@ import io
 @anvil.server.callable
 def merge_PDF_Files():
 
-  # ----- clear previous merged PDF file -----
+  #----- clear previous merged PDF file -----
   # Output PDF file where the cleared PDF will be saved
   output_pdf = "cleared.pdf"
 
@@ -55,9 +55,7 @@ def merge_PDF_Files():
   
   print("Pages removed from the PDF successfully!")
 
-
-  #----- merge PDF files -----
-  
+  #----- merge PDF files -----  
   # Create a PDF merger object
   pypdf2_merger = PyPDF2.PdfFileMerger()
 
@@ -102,6 +100,25 @@ def get_link_to_merged_PDF():
     url = file.get_url()
     print(url)
   return(url)
+
+
+
+@anvil.server.callable
+def get_list_of_sequences_and_max_seqno():
+  list_of_sequence_values =[]
+  maximum = 1
+  
+  # select max sequence value where filename is not none
+  for row in app_tables.files.search(file_name = q.not_(None)):
+    sequence = row["sequence"]
+    list_of_sequence_values.append(sequence)
+    maximum = max(list_of_sequence_values)
+    print("(Server) max seqno = " + str(maximum))
+
+  return maximum, list_of_sequence_values
+    
+
+
   
 
 
