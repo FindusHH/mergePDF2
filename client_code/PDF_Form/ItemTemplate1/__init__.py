@@ -21,8 +21,11 @@ class ItemTemplate1(ItemTemplate1Template):
     open_form('PDF_Form')
 
   def button_up_click(self, **event_args):
-    """This method is called when the button is clicked"""
     seqno = self.label_seqno.text
-    alert(seqno)
+    alert('move up: ' + str(seqno))
+
+  def button_down_click(self, **event_args):
+    seqno = self.label_seqno.text
+    alert('move down: ' + str(seqno))
     
 
