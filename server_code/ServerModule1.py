@@ -113,7 +113,7 @@ def get_list_of_sequences_and_max_seqno():
     sequence = row["sequence"]
     list_of_sequence_values.append(sequence)
     maximum = max(list_of_sequence_values)
-    print("(Server) max seqno = " + str(maximum))
+    
 
   return maximum, list_of_sequence_values
     
