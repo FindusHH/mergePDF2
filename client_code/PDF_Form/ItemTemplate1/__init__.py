@@ -29,7 +29,7 @@ class ItemTemplate1(ItemTemplate1Template):
     open_form('PDF_Form')
 
   def button_up_click(self, **event_args):
-    seqno = self.label_seqno.text
+    seqno = int(self.label_seqno.text)
     
     maximum, list_of_sequences = anvil.server.call('get_list_of_sequences_and_max_seqno')
     alert('move up: ' + str(seqno) + ' index=' + str(list_of_sequences.index(seqno)))
@@ -39,10 +39,19 @@ class ItemTemplate1(ItemTemplate1Template):
     b_index = (list_of_sequences.index(seqno)-1)
     b = list_of_sequences[b_index]
     alert(str(a) + ' ' + str(b))
+    row1 = app_tables.files.get(sequence=a)
+    row2 = app_tables.files.get(sequence=b)
+    
     a,b = self.swap(a,b)
     alert(str(a) + ' ' + str(b))
-    # write indices to apptable
-    # TO DO here
+    row1['sequence'] = a
+    row2['sequence'] = b
+
+    open_form('PDF_Form')
+
+   
+
+
 
   def button_down_click(self, **event_args):
     seqno = self.label_seqno.text

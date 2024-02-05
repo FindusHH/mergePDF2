@@ -113,8 +113,10 @@ def get_list_of_sequences_and_max_seqno():
     sequence = row["sequence"]
     list_of_sequence_values.append(sequence)
     maximum = max(list_of_sequence_values)
-    
 
+    # MUST sort the the list by sequence numbers
+    list_of_sequence_values.sort()
+    
   return maximum, list_of_sequence_values
     
 
