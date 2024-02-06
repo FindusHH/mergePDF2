@@ -46,20 +46,27 @@ components:
     name: repeating_panel_1
     layout_properties: {grid_position: 'VOAFBP,RJLMTI'}
   - name: button_merge_pdf
-    properties: {text: PDF-Dateien zusammenführen, role: elevated-button, spacing_above: large}
+    properties: {text: PDF-Dateien zusammenführen, role: elevated-button, spacing_above: large,
+      icon: 'fa:briefcase'}
     type: Button
     layout_properties: {grid_position: 'GGZUOF,SSQBZO'}
     event_bindings: {click: button_merge_pdf_click}
-  - name: create_link
-    properties: {text: Link erstellen, role: elevated-button}
-    type: Button
-    layout_properties: {grid_position: 'OCCUNJ,MDVOKN'}
-    event_bindings: {click: create_link_click}
+  - name: label_2
+    properties: {}
+    type: Label
+    layout_properties: {grid_position: 'DYXHDM,MSVVKP'}
   - name: link_merged
-    properties: {text: Zusammengeführte PDFs hier herunterladen, align: center, bold: true}
+    properties: {role: null, align: center, border: '', foreground: 'theme:Primary',
+      text: Zusammengeführte PDFs hier herunterladen, spacing_above: medium, background: '#a3f480',
+      bold: true, underline: true, icon: 'fa:download'}
     type: Link
-    layout_properties: {grid_position: 'DYXHDM,DUFYHQ'}
+    layout_properties: {grid_position: 'DYXHDM,LUCVPI'}
     event_bindings: {click: link_merged_click}
+    data_bindings: []
+  - name: label_3
+    properties: {}
+    type: Label
+    layout_properties: {grid_position: 'DYXHDM,ABOYYR'}
 - type: FlowPanel
   properties: {}
   name: navbar_links

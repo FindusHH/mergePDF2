@@ -28,9 +28,10 @@ def merge_PDF_Files():
   
   # remove all pages from existing target-PDF-File "merged.pdf"
   # Loop over files in table
-  for row in app_tables.files.search(file_name = q.not_(None)):
+  for row in app_tables.files.search( tables.order_by("sequence",ascending=True),file_name = q.not_(None)):
     print('clearing previous merged file...')
     file = row["file"]
+
     # see https://anvil.works/forum/t/creating-and-manipulating-pdf-files-via-pypdf2-and-fpdf/901
     file_bytes = file.get_bytes()
     file_for_pdf_reader = io.BytesIO(file_bytes)
@@ -61,10 +62,11 @@ def merge_PDF_Files():
 
   pdf_files = []
   # Loop over files in table
-  for row in app_tables.files.search():
+  for row in app_tables.files.search( tables.order_by("sequence",ascending=True),file_name = q.not_(None)):
     print('merging files:')
     file_name  = row["file_name"]
-    print(file_name)
+    #sequence = row['sequence']
+    print(" - " + file_name)
     pdf_files.append(file_name)
 
     file = row["file"]

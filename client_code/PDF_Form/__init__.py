@@ -15,6 +15,8 @@ class PDF_Form(PDF_FormTemplate):
     sorted_items = sorted(self.repeating_panel_1.items, key=lambda k: k['sequence'], reverse=False)
     self.repeating_panel_1.items = sorted_items
 
+    self.link_merged.visible = False
+
 
   def file_loader_1_change(self, file, **event_args):    
     # Property MUST BE SET IN UI !!
@@ -41,12 +43,18 @@ class PDF_Form(PDF_FormTemplate):
   
   def button_merge_pdf_click(self, **event_args):
     message = anvil.server.call('merge_PDF_Files')
-    alert(message)
+    link = anvil.server.call('get_link_to_merged_PDF')
+    print(link)
+    self.link_merged.url= link
+    #alert(message)
+    self.link_merged.visible = True
 
   def create_link_click(self, **event_args):
     link = anvil.server.call('get_link_to_merged_PDF')
     print(link)
     self.link_merged.url= link
+    #self.link_merged.visible = False
+    #open_form('PDF_Form')
 
 
 
