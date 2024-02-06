@@ -10,7 +10,7 @@ components:
   type: Label
   layout_properties: {grid_position: 'ADSZMU,AHMTNW'}
 - name: label_seqno
-  properties: {}
+  properties: {visible: false}
   type: Label
   layout_properties: {grid_position: 'ADSZMU,YMYWSG'}
 - name: label_2
@@ -37,7 +37,7 @@ components:
   layout_properties: {grid_position: 'PKUFGJ,ZXTOJV'}
   event_bindings: {click: button_down_click}
 - name: label_3
-  properties: {}
+  properties: {visible: true}
   type: Label
   layout_properties: {grid_position: 'PKUFGJ,MSNOMY'}
 is_package: true

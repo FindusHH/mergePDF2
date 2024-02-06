@@ -16,7 +16,7 @@ import io
 @anvil.server.callable
 def merge_PDF_Files():
 
-  #----- clear previous merged PDF file -----
+  #----- Step 1: clear previous merged PDF file -----
   # Output PDF file where the cleared PDF will be saved
   output_pdf = "cleared.pdf"
 
@@ -32,12 +32,13 @@ def merge_PDF_Files():
     print('clearing previous merged file...')
     file = row["file"]
 
+    # Read file byte by byte
     # see https://anvil.works/forum/t/creating-and-manipulating-pdf-files-via-pypdf2-and-fpdf/901
     file_bytes = file.get_bytes()
     file_for_pdf_reader = io.BytesIO(file_bytes)
     pdfReader = PyPDF2.PdfFileReader(file_for_pdf_reader)
 
-    # Iterate through the pages and add none of them to the cleared PDF object
+    # Iterate through the existing pages of the previous merge and add none of them to the cleared PDF object
     for page_num in range(pdfReader.getNumPages()):
       print("Page " + str(page_num))
       pass  # This effectively skips adding any pages
@@ -56,38 +57,38 @@ def merge_PDF_Files():
   
   print("Pages removed from the PDF successfully!")
 
-  #----- merge PDF files -----  
+  #----- Step 2: merge PDF files -----  
   # Create a PDF merger object
   pypdf2_merger = PyPDF2.PdfFileMerger()
 
   pdf_files = []
-  # Loop over files in table
+  # Loop over files in table, exclude files without filenames, sort by sequence number
   for row in app_tables.files.search( tables.order_by("sequence",ascending=True),file_name = q.not_(None)):
     print('merging files:')
     file_name  = row["file_name"]
-    #sequence = row['sequence']
     print(" - " + file_name)
     pdf_files.append(file_name)
 
     file = row["file"]
+    # Read file byte by byte
     # see https://anvil.works/forum/t/creating-and-manipulating-pdf-files-via-pypdf2-and-fpdf/901
     file_bytes = file.get_bytes()
     file_for_pdf_reader = io.BytesIO(file_bytes)
     pdfReader = PyPDF2.PdfFileReader(file_for_pdf_reader)
 
-    # may be not every PDF-File can be merged/processed
+    # Error handling, not every PDF-File can be merged/processed
     try:
       pypdf2_merger.append(file_for_pdf_reader)
       
     except Exception as error:
       ret_message = "Datei kann nicht verarbeitet werden: " + file_name + "\n\n" 
       error_message = "Fehlermeldung: " + str(error)
-      print(ret_message + error_message)
+      #print(ret_message + error_message)
 
       return (ret_message + error_message)
 
   
-  # Output file where the merged PDF will be saved
+  # Set output file for the merged PDF - file
   output_pdf = "merged.pdf"
 
   # Write the merged PDF to the output file
@@ -95,12 +96,12 @@ def merge_PDF_Files():
     with open(output_pdf, "wb") as output_file:
       pypdf2_merger.write(path)
 
-  
   # Close the merger object
   pypdf2_merger.close()
   ret_message = "Dateien wurden zusammengeführt." 
 
   return ret_message
+
 
 
 
