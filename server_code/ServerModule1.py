@@ -73,7 +73,16 @@ def merge_PDF_Files():
     file_for_pdf_reader = io.BytesIO(file_bytes)
     pdfReader = PyPDF2.PdfFileReader(file_for_pdf_reader)
 
-    pypdf2_merger.append(file_for_pdf_reader)
+    # may be not every PDF-File can be merged/processed
+    try:
+      pypdf2_merger.append(file_for_pdf_reader)
+      
+    except Exception as error:
+      ret_message = "Datei kann nicht verarbeitet werden: " + file_name + "\n\n" 
+      error_message = "Fehlermeldung: " + str(error)
+      print(ret_message + error_message)
+
+      return (ret_message + error_message)
 
   
   # Output file where the merged PDF will be saved
@@ -87,6 +96,9 @@ def merge_PDF_Files():
   
   # Close the merger object
   pypdf2_merger.close()
+  ret_message = "Dateien wurden zusammengeführt." 
+
+  return ret_message
 
 
 
