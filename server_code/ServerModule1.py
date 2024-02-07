@@ -61,8 +61,8 @@ def clear_PDF():
 @anvil.server.callable
 def merge_PDF_Files():
   #----- Step 1: clear previous merged PDF file -----
-  clear_PDF()
-  """
+  #clear_PDF()
+  
   #----- Step 2: merge PDF files -----  
   # Create a PDF merger object
   pypdf2_merger = PyPDF2.PdfFileMerger()
@@ -84,19 +84,20 @@ def merge_PDF_Files():
     # Read file byte by byte
     # see https://anvil.works/forum/t/creating-and-manipulating-pdf-files-via-pypdf2-and-fpdf/901
     try:
+      print("reading PDF  io.Bytes" + file)
       file_bytes = file.get_bytes()
       file_for_pdf_reader = io.BytesIO(file_bytes)
       pdfReader = PyPDF2.PdfFileReader(file_for_pdf_reader)
     except Exception as error:
-      print("Exception when reading PDF " + file)
+      print("Exception when reading PDF " + file_name)
       print(str(error))
 
     # Error handling, not every PDF-File can be merged/processed
     ret_message = 'OK'
     error_message = ''
+    
     try:
       pypdf2_merger.append(file_for_pdf_reader)
-      
     except Exception as error:
       ret_message = "Datei kann nicht verarbeitet werden: " + file_name + "\n\n" 
       error_message = "Fehlermeldung: " + str(error)
@@ -118,7 +119,7 @@ def merge_PDF_Files():
   ret_message = "Dateien wurden zusammengeführt." 
   
   return ret_message
-  """
+  
   return('test')
 
 
