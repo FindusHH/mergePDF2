@@ -12,10 +12,7 @@ import io
 
 
 
-# merge PDF-Files which are uploaded
-@anvil.server.callable
-def merge_PDF_Files():
-
+def clear_PDF():
   #----- Step 1: clear previous merged PDF file -----
   # Output PDF file where the cleared PDF will be saved
   output_pdf = "cleared.pdf"
@@ -57,6 +54,15 @@ def merge_PDF_Files():
   
   print("Pages removed from the PDF successfully!")
 
+
+
+
+# merge PDF-Files which are uploaded
+@anvil.server.callable
+def merge_PDF_Files():
+  #----- Step 1: clear previous merged PDF file -----
+  clear_PDF()
+  """
   #----- Step 2: merge PDF files -----  
   # Create a PDF merger object
   pypdf2_merger = PyPDF2.PdfFileMerger()
@@ -67,25 +73,36 @@ def merge_PDF_Files():
     print('merging files:')
     file_name  = row["file_name"]
     print(" - " + file_name)
-    pdf_files.append(file_name)
-
+    try:
+      pdf_files.append(file_name)
+    except Exception as error:
+      print("Exception when appending to PDF " + file)
+      print(str(error))
+    print ("   " + file_name + " appended to array")
+    
     file = row["file"]
     # Read file byte by byte
     # see https://anvil.works/forum/t/creating-and-manipulating-pdf-files-via-pypdf2-and-fpdf/901
-    file_bytes = file.get_bytes()
-    file_for_pdf_reader = io.BytesIO(file_bytes)
-    pdfReader = PyPDF2.PdfFileReader(file_for_pdf_reader)
+    try:
+      file_bytes = file.get_bytes()
+      file_for_pdf_reader = io.BytesIO(file_bytes)
+      pdfReader = PyPDF2.PdfFileReader(file_for_pdf_reader)
+    except Exception as error:
+      print("Exception when reading PDF " + file)
+      print(str(error))
 
     # Error handling, not every PDF-File can be merged/processed
+    ret_message = 'OK'
+    error_message = ''
     try:
       pypdf2_merger.append(file_for_pdf_reader)
       
     except Exception as error:
       ret_message = "Datei kann nicht verarbeitet werden: " + file_name + "\n\n" 
       error_message = "Fehlermeldung: " + str(error)
-      #print(ret_message + error_message)
+      print(ret_message + error_message)
 
-      return (ret_message + error_message)
+    return (ret_message + error_message)
 
   
   # Set output file for the merged PDF - file
@@ -99,8 +116,10 @@ def merge_PDF_Files():
   # Close the merger object
   pypdf2_merger.close()
   ret_message = "Dateien wurden zusammengeführt." 
-
+  
   return ret_message
+  """
+  return('test')
 
 
 
