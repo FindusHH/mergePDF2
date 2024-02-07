@@ -19,7 +19,7 @@ def merge_PDF_Files():
   #----- Step 1: clear previous merged PDF file -----
   # Output PDF file where the cleared PDF will be saved
   output_pdf = "cleared.pdf"
-
+  """
   # Create an empty PDF object
   pdf_cleared = PyPDF2.PdfFileWriter()
 
@@ -56,7 +56,7 @@ def merge_PDF_Files():
   pypdf2_merger.close()
   
   print("Pages removed from the PDF successfully!")
-
+  """
   #----- Step 2: merge PDF files -----  
   # Create a PDF merger object
   pypdf2_merger = PyPDF2.PdfFileMerger()
