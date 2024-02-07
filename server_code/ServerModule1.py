@@ -59,7 +59,8 @@ def merge_PDF_Files():
   """
   #----- Step 2: merge PDF files -----  
   # Create a PDF merger object
-  pypdf2_merger = PyPDF2.PdfFileMerger()
+  #pypdf2_merger = PyPDF2.PdfFileMerger()
+  pypdf2_merger = PyPDF2.PdfFileMerger(strict=False)
 
   pdf_files = []
   # Loop over files in table, exclude files without filenames, sort by sequence number
